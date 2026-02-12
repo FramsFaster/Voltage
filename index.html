@@ -3,124 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Скачать игру Voltage</title>
+    <title>Voltage Launcher</title>
     <style>
-        * {
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: #fff; 
+            padding: 50px;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
-        body {
-            background: black;
-            height: 100vh;
-            position: relative;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        #bgVideo {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-        }
-        .content {
-            position: fixed;
-            top: 50%;
-            right: 5vw;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            text-align: right;
-            max-width: 500px;
-            z-index: 10;
-        }
-        h1 {
-            font-size: 48px;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-            color: white;
-        }
-        .download-btn {
-            display: inline-block;
-            padding: 20px 50px;
-            background-color: #4a4a4a;
-            color: white;
-            text-decoration: none;
-            font-size: 28px;
+        .download-btn { 
+            background: #ff6b35; 
+            color: white; 
+            padding: 25px 50px; 
+            font-size: 28px; 
+            border: none; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            display: inline-block; 
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(255,107,53,0.4);
             font-weight: bold;
+        }
+        .download-btn:hover { 
+            background: #e55a2b; 
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255,107,53,0.6);
+        }
+        .features {
+            background: rgba(22,33,62,0.8);
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-            border: none;
-            cursor: pointer;
+            margin: 30px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
         }
-        .download-btn:hover {
-            background-color: #333333;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-        }
-        .instructions {
-            background: rgba(0,0,0,0.8);
-            padding: 25px;
-            border-radius: 15px;
-            line-height: 1.6;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;  /* ✅ ВСЁ белое сразу */
-        }
-        .instructions strong {
-            margin-bottom: 15px;
-        }
-        .instructions em {
-            font-style: italic;
+        .checksum { 
+            background: #0f1628; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin: 20px auto; 
+            font-family: 'Courier New', monospace; 
+            font-size: 14px; 
+            word-break: break-all;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
-    <!-- Циклический видео-фон -->
-    <video id="bgVideo" autoplay muted loop>
-        <source src="BG.mp4" type="video/mp4">
-    </video>
+    <h1>⚡ Voltage v1.0</h1>
     
-    <!-- Циклическая музыка -->
-    <audio id="bgAudio" autoplay loop>
-        <source src="audio.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="content">
-        <h1>Voltage</h1>
-        
-        <a href="Voltage v1.0.zip" download="Voltage v1.0.zip" class="download-btn">
-            📥 Download (ZIP 150MB)
-        </a>
-        
-        <div class="instructions">
-            <strong>🎮 Как запустить:</strong>
-            <div>1. Скачать архив</div>
-            <div>2. Распакуйте 7-Zip'ом</div>
-            <div>3. Запустить <strong>Voltage.exe</strong></div>
-            <br>
-            <em>Windows 10/11</em>
-            <em>Процессор: Intel Core i5</em>
-            <em>Видеокарта: NVIDIA GT 1030</em>
-            <em>RAM: 8 ГБ</em>
-            <em>Место: 15 ГБ+</em>
-        </div>
+    <!-- 🔥 MEDIAFIRE NSIS LAUNCHER (ЗАМЕНИ НА СВОЮ ССЫЛКУ) -->
+    <a href="https://downloadXXXX.mediafire.com/XXXXXXXXXX/VoltageLauncher.exe" 
+       class="download-btn" download="VoltageLauncher.exe">
+        🚀 Скачать Лаунчер (NSIS EXE)
+    </a>
+    
+    <div class="features">
+        <h3>✅ Что делает лаунчер:</h3>
+        <ul style="text-align: left; display: inline-block;">
+            <li>📥 Автозагрузка Voltage v1.0.zip (150MB)</li>
+            <li>📦 Автораспаковка ZIP</li>
+            <li>🎮 Автозапуск Voltage.exe</li>
+            <li>🔄 Проверка обновлений</li>
+            <li>⚡ 8-BIT анимация загрузки</li>
+        </ul>
     </div>
-
-    <script>
-        document.addEventListener('click', function() {
-            document.getElementById('bgVideo').play().catch(() => {});
-            document.getElementById('bgAudio').play().catch(() => {});
-        }, { once: true });
-    </script>
+    
+    <div class="checksum">
+        SHA256: 77093e9abd76e716b48de3388c4b11da0395d8bca4afbabede859e4d5c19f9df
+    </div>
+    
+    <p style="margin-top: 40px">
+        <small>Windows 10/11 | Intel Core i5 | 8GB RAM | Автоустановка ~2 мин</small>
+    </p>
 </body>
 </html>
