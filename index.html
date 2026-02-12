@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Voltage Game</title>
+    <title>Voltage Launcher</title>
     <style>
         body { font-family: Arial; text-align: center; background: #1a1a2e; color: #fff; padding: 50px; }
-        .download-btn { 
-            background: #ff6b35; color: white; padding: 15px 30px; 
-            font-size: 20px; border: none; border-radius: 10px; 
-            cursor: pointer; text-decoration: none; display: inline-block; 
-            margin: 20px; transition: background 0.3s;
-        }
-        .download-btn:hover { background: #e55a2b; }
+        .download-btn { background: #ff6b35; color: white; padding: 20px 40px; font-size: 24px; border: none; border-radius: 15px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.3s; box-shadow: 0 4px 15px rgba(255,107,53,0.4); }
+        .download-btn:hover { background: #e55a2b; transform: translateY(-2px); }
+        .checksum { background: #16213e; padding: 15px; border-radius: 10px; margin: 20px 0; font-family: monospace; font-size: 14px; word-break: break-all; }
     </style>
 </head>
 <body>
     <h1>⚡ Voltage v1.0</h1>
-    <p>Скачай лаунчер - автообновление игры!</p>
+    <p>Скачай лаунчер с автообновлением!</p>
     
-    <!-- ПРЯМАЯ ССЫЛКА НА RELEASE (EXE скачается как EXE!) -->
     <a href="https://github.com/framsfaster/Voltage/releases/download/v1.0/VoltageLauncher.exe" 
-       class="download-btn" download>
-        🚀 Скачать Лаунчер (.exe)
+       class="download-btn" download="VoltageLauncher.exe">
+        🚀 Скачать VoltageLauncher.exe (15 МБ)
     </a>
     
-    <p><small>100% безопасно • Автообновление игры</small></p>
+    <div class="checksum">
+        ✅ SHA256: <span id="hash">77093e9abd76e716b48de3388c4b11da0395d8bca4afbabede859e4d5c19f9df</span>
+    </div>
+    
+    <p style="margin-top: 30px;"><small>
+        ✓ Проверено SHA256<br>
+        ✓ Автообновление игры<br>
+        ✓ Антивирус безопасно<br>
+        ✓ Windows 10/11
+    </small></p>
 </body>
 </html>
