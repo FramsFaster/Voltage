@@ -2,40 +2,268 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Voltage Launcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Voltage Launcher v1.0</title>
     <style>
-        body { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-            color: #fff; 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            padding: 100px; 
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .btn { 
-            background: #ff6b35; 
-            color: #fff; 
-            padding: 25px 60px; 
-            font-size: 28px; 
-            border: none; 
-            border-radius: 20px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            display: inline-block; 
-            box-shadow: 0 8px 25px rgba(255,107,53,0.4);
-            transition: all 0.3s;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #0a0a0a;
         }
-        .btn:hover { 
-            background: #e55a2b; 
-            transform: translateY(-5px); 
-            box-shadow: 0 12px 35px rgba(255,107,53,0.6); 
+
+        /* 🎥 MP4 ФОН */
+        #background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        /* Затемнение */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,20,60,0.8) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 2;
+        }
+
+        /* 🎮 ПРАВАЯ ПАНЕЛЬ */
+        #launcher-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(20,25,50,0.95) 0%, rgba(10,15,35,0.98) 100%);
+            backdrop-filter: blur(20px);
+            border-left: 3px solid #ff69b4;
+            z-index: 3;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -20px 0 60px rgba(255,105,180,0.3);
+        }
+
+        /* Заголовок */
+        .title {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 30px rgba(255,105,180,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px #ff69b4); }
+            to { filter: drop-shadow(0 0 20px #ff1493); }
+        }
+
+        /* Новости */
+        .news-section {
+            margin-bottom: 40px;
+            flex: 1;
+        }
+
+        .news-title {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .news-title::before {
+            content: "📰";
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .news-item {
+            color: #cccccc;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border-left: 4px solid #ff69b4;
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            background: rgba(255,105,180,0.1);
+            transform: translateX(5px);
+        }
+
+        /* Кнопки */
+        .buttons {
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px 24px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255,105,180,0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,105,180,0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+            color: white;
+            box-shadow: 0 8px 25px rgba(74,144,226,0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(74,144,226,0.5);
+        }
+
+        /* Статус */
+        .status {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            color: #ffeb3b;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Адаптив */
+        @media (max-width: 600px) {
+            #launcher-panel {
+                width: 100%;
+                border-left: none;
+                border-bottom: 3px solid #ff69b4;
+                height: 100vh;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>⚡ Voltage v1.0</h1>
-    <br><br>
-    <a href="VoltageLauncher.exe" class="btn" download>📥 Скачать Лаунчер</a>
-    <p style="margin-top: 40px; font-size: 18px;">EXE (15 КБ) → Кнопка → Авто-игра!</p>
+    <!-- 🎥 MP4 ФОН -->
+    <video id="background-video" autoplay muted loop>
+        <source src="background.mp4" type="video/mp4">
+    </video>
+
+    <!-- Затемнение -->
+    <div id="overlay"></div>
+
+    <!-- 🎮 ПРАВАЯ ПАНЕЛЬ -->
+    <div id="launcher-panel">
+        <h1 class="title">⚡ VOLTAGE v1.0</h1>
+        
+        <!-- Новости -->
+        <div class="news-section">
+            <div class="news-title">Новости</div>
+            <div class="news-item">🎉 Voltage v1.0 успешно выпущен!</div>
+            <div class="news-item">🔥 Новые ритм-механики</div>
+            <div class="news-item">⭐ 5 новых треков</div>
+            <div class="news-item">🎨 Улучшенный интерфейс</div>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="launchGame()">
+                🎮 ИГРАТЬ
+            </button>
+            <button class="btn btn-secondary" onclick="openSettings()">
+                ⚙️ НАСТРОЙКИ
+            </button>
+            <button class="btn btn-secondary" onclick="openDiscord()">
+                💬 ДИСКОРД
+            </button>
+        </div>
+
+        <!-- Статус -->
+        <div class="status" id="statusText">
+            ✅ Готово к запуску!
+        </div>
+    </div>
+
+    <!-- МУЗЫКА -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Запуск музыки
+        window.onload = function() {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.3;
+            music.play().catch(e => console.log('Автозапуск заблокирован'));
+        };
+
+        // Запуск игры
+        function launchGame() {
+            const status = document.getElementById('statusText');
+            status.innerHTML = '🚀 Запуск Voltage...';
+            
+            // Проверка наличия игры
+            if (navigator.userAgent.includes('Windows')) {
+                const gamePath = 'Voltage/Voltage.exe';
+                if (checkFileExists(gamePath)) {
+                    setTimeout(() => {
+                        window.location.href = gamePath;
+                    }, 1000);
+                } else {
+                    status.innerHTML = '❌ Игра не найдена!<br>📥 Скачай с GitHub Releases';
+                }
+            }
+        }
+
+        // Проверка файла (упрощенно)
+        function checkFileExists(path) {
+            // Для Electron используй fs
+            return false; // Заглушка
+        }
+
+        // Настройки
+        function openSettings() {
+            alert('⚙️ Настройки\n\n• Графика: Высокая\n• Звуки: 100%\n• FPS: 60');
+        }
+
+        // Discord
+        function openDiscord() {
+            window.open('https://discord.gg/your-discord', '_blank');
+        }
+    </script>
 </body>
 </html>
