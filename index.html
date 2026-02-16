@@ -1,413 +1,188 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voltage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #1a1a1a;
-            min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
-            color: white;
-            overflow-x: hidden;
-        }
+<script>
+    // 🎯 АДАПТИВНАЯ КАРУСЕЛЬ + АУДИО/ВИДЕО
+    (function() {
+        'use strict';
         
-        /* ✅ ВИДЕО-ФОН ТОЛЬКО В ПЕРВОЙ СЕКЦИИ */
-        .hero-section {
-            min-height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 0 5vw;
-        }
-        .video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        #bgVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .hero-content {
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            text-align: right;
-            z-index: 10;
-            position: relative;
-        }
-        h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: 5rem;
-            font-weight: 900;
-            color: #e0e0e0;
-            text-shadow: 0 0 30px rgba(255,255,255,0.3);
-            margin-bottom: 40px;
-            letter-spacing: 4px;
-        }
-        .download-section {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-            max-width: 500px;
-        }
-        .download-btn {
-            display: block;
-            padding: 25px 30px;
-            background: #4a4a4a;
-            color: white;
-            text-decoration: none;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.4rem;
-            font-weight: 700;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            transition: all 0.3s ease;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            width: 100%;
-        }
-        .download-btn:hover {
-            background: #333;
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-        }
-        .instructions {
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 20px;
-            line-height: 1.7;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            border: 1px solid #4a4a4a;
-            width: 100%;
-        }
-        .instructions strong {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.3rem;
-            display: block;
-            margin-bottom: 20px;
-            color: #e0e0e0;
-        }
-        .instructions div {
-            margin-bottom: 8px;
-            opacity: 0.9;
-        }
-        .instructions em {
-            font-style: italic;
-            color: #b0b0b0;
-            font-weight: 500;
-            display: block;
-            margin-top: 15px;
-        }
-
-        /* Секция персонажей БЕЗ видео */
-        .characters-section {
-            padding: 120px 5vw;
-            background: linear-gradient(180deg, rgba(26,26,26,0.9) 0%, #1a1a1a 100%);
-        }
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 80px;
-            color: #e0e0e0;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-        
-        .carousel-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            max-width: 1100px;
-            margin: 0 auto 0 auto;
-            margin-left: 33%;
-            gap: 40px;
-        }
-        .characters-carousel {
-            width: 500px;
-            height: 600px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 30px;
-            background: rgba(0,0,0,0.8);
-            border: 2px solid #4a4a4a;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-        }
-        .carousel-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            width: calc(500px * 3);
-        }
-        .char-card {
-    flex: 0 0 500px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: transparent;
-    border-radius: 25px;
-    overflow: hidden;
-    position: relative;
-}
-
-.char-image {
-    flex: 1.2;
-    width: 100%;
-    position: relative;
-    background: #333;
-    border-radius: 25px 25px 0 0;
-    overflow: hidden;
-}
-
-.char-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.char-info {
-    padding: 25px 30px !important;
-    background: rgba(0,0,0,0.95) !important;
-    color: white !important;
-    border-radius: 0 0 25px 25px !important;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10 !important;
-}
-
-.char-name {
-    font-family: 'Orbitron', monospace !important;
-    font-size: 1.8rem !important;
-    margin-bottom: 12px !important;
-    color: #e0e0e0 !important;
-}
-
-.char-desc {
-    opacity: 0.95 !important;
-    line-height: 1.5 !important;
-    font-size: 1.1rem !important;
-    color: white !important;
-}
-
-        
-        .carousel-nav {
-            width: 80px;
-            height: 80px;
-            background: rgba(74,74,74,0.95);
-            border: 3px solid #4a4a4a;
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 900;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            backdrop-filter: blur(20px);
-            user-select: none;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-        }
-        .carousel-nav:hover {
-            background: #4a4a4a;
-            transform: scale(1.2);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-        }
-        .carousel-nav:active {
-            transform: scale(0.95);
-        }
-        
-        .carousel-dots {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 50px;
-        }
-        .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #333;
-            border: 2px solid #4a4a4a;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .dot.active {
-            background: #4a4a4a;
-            transform: scale(1.3);
-            box-shadow: 0 0 10px rgba(74,74,74,0.5);
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        @media (max-width: 768px) {
-            .hero-section {
-                justify-content: center;
-                padding: 0 20px;
-            }
-            .hero-content {
-                align-items: center;
-                text-align: center;
-            }
-            h1 {
-                font-size: 3.5rem;
-            }
-            .carousel-container {
-                flex-direction: column;
-                gap: 20px;
-                margin-left: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- ✅ HERO С ВИДЕО-ФОНОМ -->
-    <section class="hero-section">
-        <div class="video-bg">
-            <video id="bgVideo" autoplay muted loop playsinline>
-                <source src="BG.mp4" type="video/mp4">
-            </video>
-        </div>
-        
-        <div class="hero-content">
-            <h1>VOLTAGE</h1>
-            <div class="download-section">
-                <a href="https://drive.usercontent.google.com/download?id=1ccnBzOu3Gb6Bsn6s75XV5-g5jSIJhUVH&export=download&authuser=0" 
-                   class="download-btn" download="Voltage v1.0.zip">
-                    📥 Download (ZIP 150MB)
-                </a>
-                
-                <div class="instructions">
-                    <strong>🎮 Как запустить:</strong>
-                    <div>1. Скачать архив</div>
-                    <div>2. Распакуйте 7-Zip'ом</div>
-                    <div>3. Запустить <strong>Voltage.exe</strong></div>
-                    <br>
-                    <em>Windows 10/11</em>
-                    <em>Процессор: Intel Core i5</em>
-                    <em>Видеокарта: NVIDIA GT 1030</em>
-                    <em>RAM: 8 ГБ</em>
-                    <em>Место: 15 ГБ+</em>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ✅ ПЕРСОНАЖИ БЕЗ ВИДЕО-ФОНА -->
-    <section class="characters-section">
-        <h2 class="section-title">Персонажи</h2>
-        
-        <div class="carousel-container">
-            <div class="carousel-nav" id="prevBtn">‹</div>
-            
-            <div class="characters-carousel">
-                <div class="carousel-track" id="carouselTrack">
-                    <div class="char-card">
-                        <div class="char-image">
-                            <img src="images/hero1.png" alt="Персонаж 1">
-                        </div>
-                        <div class="char-info">
-                            <div class="char-name">Главный герой</div>
-                            <div class="char-desc">Просто бездельник и лентяй</div>
-                        </div>
-                    </div>
-                    <div class="char-card">
-                        <div class="char-image">Изображение персонажа 2</div>
-                        <div class="char-info">
-                            <div class="char-name">Персонаж 2</div>
-                            <div class="char-desc">Описание персонажа. Уникальные способности и стиль игры.</div>
-                        </div>
-                    </div>
-                    <div class="char-card">
-                        <div class="char-image">Изображение персонажа 3</div>
-                        <div class="char-info">
-                            <div class="char-name">Персонаж 3</div>
-                            <div class="char-desc">Описание персонажа. Уникальные способности и стиль игры.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="carousel-nav" id="nextBtn">›</div>
-        </div>
-        
-        <div class="carousel-dots" id="carouselDots"></div>
-    </section>
-
-    <audio id="bgAudio" autoplay loop>
-        <source src="audio.mp3" type="audio/mpeg">
-    </audio>
-
-    <script>
+        // 🔍 ЭЛЕМЕНТЫ
         const track = document.getElementById('carouselTrack');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const dotsContainer = document.getElementById('carouselDots');
+        const bgVideo = document.getElementById('bgVideo');
+        const bgAudio = document.getElementById('bgAudio');
         
         let currentSlide = 0;
-        const totalSlides = 3;
+        let totalSlides = 3;
+        let dots = [];
+        let autoplayInterval;
+        let isAutoplay = false;
+        let touchStartX = 0;
+        let touchEndX = 0;
         
-        for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
+        // 📏 АДАПТИВНЫЙ РАСЧЕТ РАЗМЕРОВ
+        function getSlideWidth() {
+            const carousel = document.querySelector('.characters-carousel');
+            return carousel.offsetWidth;
         }
-        const dots = document.querySelectorAll('.dot');
         
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
+        // 🔄 ОБНОВИТЬ КАРУСЕЛЬ
+        function updateCarousel() {
+            const slideWidth = getSlideWidth();
+            const translateX = -currentSlide * slideWidth;
+            track.style.transform = `translateX(${translateX}px)`;
+            
+            // ✅ АКТИВНАЯ ТОЧКА
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            
+            // 🔒 БЛОКИРОВКА КНОПОК
+            prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
+            prevBtn.style.cursor = currentSlide === 0 ? 'not-allowed' : 'pointer';
+            nextBtn.style.cursor = currentSlide === totalSlides - 1 ? 'not-allowed' : 'pointer';
+        }
         
+        // ➡️ СЛЕДУЮЩИЙ СЛАЙД
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+            } else {
+                currentSlide = 0; // 🔁 Бесконечная прокрутка
+            }
             updateCarousel();
         }
         
+        // ⬅️ ПРЕДЫДУЩИЙ СЛАЙД
         function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            if (currentSlide > 0) {
+                currentSlide--;
+            } else {
+                currentSlide = totalSlides - 1; // 🔁 Бесконечная прокрутка
+            }
             updateCarousel();
         }
         
+        // 🎯 ПЕРЕХОД К СЛАЙДУ
         function goToSlide(slideIndex) {
             currentSlide = slideIndex;
             updateCarousel();
         }
         
-        function updateCarousel() {
-            const translateX = -currentSlide * 500;
-            track.style.transform = `translateX(${translateX}px)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
+        // 🖱️ СОЗДАНИЕ ТОЧЕК
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+                dots.push(dot);
+            }
+        }
+        
+        // 📱 СВАЙП ДЛЯ МОБАЙЛ
+        function addSwipeSupport() {
+            track.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            track.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
             });
         }
         
-        document.addEventListener('click', function() {
-            document.getElementById('bgVideo').play().catch(() => {});
-            document.getElementById('bgAudio').play().catch(() => {});
-        }, { once: true });
-    </script>
-</body>
-</html>
+        // 👆 ОБРАБОТКА СВАЙПА
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Свайп влево
+                } else {
+                    prevSlide(); // Свайп вправо
+                }
+            }
+        }
+        
+        // 🎵 АВТОЗАПУСК
+        function startAutoplay() {
+            if (isAutoplay) return;
+            isAutoplay = true;
+            autoplayInterval = setInterval(nextSlide, 4000);
+        }
+        
+        function stopAutoplay() {
+            isAutoplay = false;
+            clearInterval(autoplayInterval);
+        }
+        
+        // 🎬 ВИДЕО + АУДИО (мобильная совместимость)
+        function initMedia() {
+            const playMedia = () => {
+                bgVideo.play().catch(() => {});
+                bgAudio.play().catch(() => {});
+                document.removeEventListener('click', playMedia, { once: true });
+                document.removeEventListener('touchstart', playMedia, { once: true });
+            };
+            
+            // Автозапуск по первому взаимодействию
+            document.addEventListener('click', playMedia, { once: true });
+            document.addEventListener('touchstart', playMedia, { once: true });
+            
+            // 🔇 ПАУЗА ПРИ СКРЫТОМ ВИДЕО
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    bgVideo.pause();
+                    bgAudio.pause();
+                } else {
+                    bgVideo.play().catch(() => {});
+                }
+            });
+        }
+        
+        // 📐 АДАПТИВНОСТЬ ПРИ ИЗМЕНЕНИИ РАЗМЕРА
+        function initResizeHandler() {
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    updateCarousel();
+                }, 250);
+            });
+        }
+        
+        // 🚀 ИНИЦИАЛИЗАЦИЯ
+        function init() {
+            createDots();
+            updateCarousel();
+            
+            // 🎮 СОБЫТИЯ
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            
+            // 📱 МОБАЙЛ
+            addSwipeSupport();
+            
+            // 🎬 МЕДИА
+            initMedia();
+            
+            // 📐 АДАПТИВНОСТЬ
+            initResizeHandler();
+            
+            // 🎵 АВТОЗАПУСК (опционально)
+            // startAutoplay();
+        }
+        
+        // ⏳ ЗАПУСК ПОСЛЕ ЗАГРУЗКИ DOM
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        
+    })();
+</script>
